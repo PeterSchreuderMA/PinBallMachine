@@ -4,7 +4,6 @@
 
 1. Peter Schreuder
 
-
 [Projectmanagment - Trello](https://trello.com/b/2Ilzt33Y/sio-pinball-machine)
 
 ## Ontwerp
@@ -21,18 +20,26 @@ Zet hier de links neer naar jullie documentatie.
 * [Presentatie]()
 
 ## Benodigdheden
-//-Nodig
-[Hoeveelheid - Wat]
-2 - Knoppen
-5 - Motortjes
-1 - Driver Controller 
-Veel – Lampjes
-Veel - Weerstandjes
-Veel - Kabel
-? - Ledstrips
-1 - Tablet (Om score te zien)
+#### Nodig
+###### [Hoeveelheid - Wat]
+* 2 - Knoppen
+
+* 5 - Motortjes
+
+* 1 - Driver Controller
+
+* Veel – Lampjes
+
+* Veel - Weerstandjes
+
+* Veel - Kabel
+
+* ? - Ledstrips
+
+* 1 - Tablet (Om score te zien)
 
 
-//-Toch maar niet
-1 - Speaker (Toch maar niet)
-1 - MP3 Format Decoder 
+#### Toch maar niet
+* 1 - Speaker (Toch maar niet)
+
+* 1 - MP3 Format Decoder
