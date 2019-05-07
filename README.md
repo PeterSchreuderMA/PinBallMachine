@@ -1,6 +1,6 @@
 ﻿# SIO - PinBallMachine - Special Input/Output
 
-Team:#
+## Team:
 
 1. Peter Schreuder
 
@@ -10,8 +10,7 @@ Team:#
 ## Ontwerp
 Beschrijf hier kort jullie project
 
-## 
-Portfolio
+## Portfolio
 
 Zet hier de links neer naar jullie documentatie.
 
@@ -21,14 +20,7 @@ Zet hier de links neer naar jullie documentatie.
 * [Testrapportage]()
 * [Presentatie]()
 
-
-# PinBallMachine
-This is for a school project
-#
-Video:
-https://youtu.be/Kdzlhn8NSmM
-#
-#
+## Benodigdheden
 //-Nodig
 [Hoeveelheid - Wat]
 2 - Knoppen
