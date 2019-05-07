@@ -1,15 +1,11 @@
 ﻿# SIO - PinBallMachine - Special Input/Output
 
-Team#
+Team:#
 
-1. teamlid 
-
-2. teamlid
-
-3. teamlid
+1. Peter Schreuder
 
 
-[Projectmanagment]() <Trello scrumboard bijvoorbeeld>
+[Projectmanagment - Trello](https://trello.com/b/2Ilzt33Y/sio-pinball-machine)
 
 ## Ontwerp
 Beschrijf hier kort jullie project
@@ -22,9 +18,7 @@ Zet hier de links neer naar jullie documentatie.
 
 * [Onderzoek]()
 * [Ontwerp]()
-
 * [Testrapportage]()
-
 * [Presentatie]()
 
 
