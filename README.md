@@ -18,6 +18,7 @@ Zet hier de links neer naar jullie documentatie.
 * [Ontwerp]()
 * [Testrapportage]()
 * [Presentatie]()
+* [Logboek](https://docs.google.com/document/d/1QCDX74J8gOg-z7i63uStQxrVylMrT_1izJQTszGkzzM/edit?usp=sharing)
 
 ## Benodigdheden
 #### Nodig
