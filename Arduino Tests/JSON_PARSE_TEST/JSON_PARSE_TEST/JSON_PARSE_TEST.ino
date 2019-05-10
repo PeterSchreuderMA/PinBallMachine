@@ -16,13 +16,13 @@ const char* ssid = "Medialab"; // wifi lan Station ID netwerk naam [School: Medi
 const char* password = "Mediacollege"; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
 const char*  server = "gamereach.nl"; // deployment server
 
-String doc = "/control.json"; // path to file
+String docControl = "/control.json"; // path to file
 
 static const uint8_t wifiConnecting = D1;//LED indicator wifi status flashing while connecting
 static const uint8_t wifiOk = D2;//LED indicator wifi status ON if connected
 static const uint8_t Led1 = D3;//LED indicator wifi status ON if connected
 
-int requestInterval = 500;
+int requestInterval = 10;
 int requestAmount = 0;
 
 boolean debug = true;// print debug messages to terminal
@@ -48,26 +48,8 @@ void loop()
 	if (WiFi.status() != WL_CONNECTED)
 		wifiConnect();
 
-	httpRequest();//get data from webserver
-	if (debug)
-	{
-		Serial.println("");
-		Serial.println("-------Full Request-------");
-		Serial.println(httpResponse); //debug
-		Serial.println("--------------------------");
-		Serial.println("");
-	}
-
+	httpRequest(docControl);//get data from webserver
 	payload();//extract wanted data from HTTP response
-	if (debug)
-	{
-		Serial.println("");
-		Serial.println("-------JSON-------");
-		Serial.println(httpResponse); //debug
-		Serial.println("------------------");
-		Serial.println("");
-	}
-		
 
 	extractJson();
 }
@@ -82,9 +64,9 @@ void extractJson()
 
 	httpResponse.toCharArray(json, size);
 
-	StaticJsonDocument<256> json_object; //<==== nieuwe lib
+	StaticJsonDocument<256> json_object;
 
-	DeserializationError error = deserializeJson(json_object, json); // <==== nieuwe lib
+	DeserializationError error = deserializeJson(json_object, json);
 
 	if (error)
 	{
@@ -127,9 +109,18 @@ void payload()
 	}
 
 	httpResponse = httpResponse.substring(foundEOH);// strip the HTTP header
+
+	if (debug)
+	{
+		Serial.println("");
+		Serial.println("-------JSON-------");
+		Serial.println(httpResponse); //debug
+		Serial.println("------------------");
+		Serial.println("");
+	}
 }
 
-void httpRequest()
+void httpRequest(String _doc)
 {
 	// get HTTP response from webserver
 	digitalWrite(wifiOk, LOW);//flash LED
@@ -152,7 +143,7 @@ void httpRequest()
 		Serial.println("Request number: " + String(requestAmount));
 
 		//connect to webserver on port 80
-		client.println("GET " + doc + " HTTP/1.1");//construct a HTTP GET request
+		client.println("GET " + _doc + " HTTP/1.1");//construct a HTTP GET request
 		client.println("Host: " + String(server));
 		client.println("Connection: keep-alive");
 		client.println();
@@ -177,6 +168,15 @@ void httpRequest()
 			}
 		}
 	}
+
+	if (debug)
+	{
+		Serial.println("");
+		Serial.println("-------Full Request-------");
+		Serial.println(httpResponse); //debug
+		Serial.println("--------------------------");
+		Serial.println("");
+	}
 }
 
 void wifiConnect()
@@ -195,7 +195,7 @@ void wifiConnect()
 
 	while (WiFi.status() != WL_CONNECTED)
 	{
-		delay(500);//<========== delay
+		delay(50);//<========== delay
 		Serial.print(".");
 		if (ledState == 0) ledState = 1;
 		else ledState = 0;
