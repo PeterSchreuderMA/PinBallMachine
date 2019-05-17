@@ -8,6 +8,7 @@
 //werkt met ArduinoJson library version 6.9.1
 
 //pwm library https://nodemcu.readthedocs.io/en/dev/en/modules/pwm/
+#include "Internet.h"
 #include "Targets.h"
 #include "Gameplay.h"
 #include "Controls.h"
