@@ -105,6 +105,7 @@
   <ItemGroup>
     <ClInclude Include="Controls.h" />
     <ClInclude Include="Gameplay.h" />
+    <ClInclude Include="Internet.h" />
     <ClInclude Include="MachineServos.h" />
     <ClInclude Include="Targets.h" />
     <ClInclude Include="__vm\.MainApp.vsarduino.h" />
@@ -112,6 +113,7 @@
   <ItemGroup>
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="Gameplay.cpp" />
+    <ClCompile Include="Internet.cpp" />
     <ClCompile Include="MachineServos.cpp" />
     <ClCompile Include="Targets.cpp" />
   </ItemGroup>

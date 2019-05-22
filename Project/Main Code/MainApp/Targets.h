@@ -12,7 +12,10 @@
 class TargetsClass
 {
  public:
-	void init();
+	 void TargetsInit();
+	 
+	 void TargetGroupSetup(int _index, int _pin, int _score);
+	 bool TargetGroupCheckActivated(int _index);
 };
 
 extern TargetsClass Targets;
