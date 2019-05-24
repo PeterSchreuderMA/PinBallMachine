@@ -95,7 +95,7 @@ void GameplayClass::InputManager()
 	ButtonCheck(L_Button, L_Flipper);
 
 	//- Check: Right button
-	ButtonCheck(R_Button, R_Button);
+	ButtonCheck(R_Button, R_Flipper);
 }
 
 

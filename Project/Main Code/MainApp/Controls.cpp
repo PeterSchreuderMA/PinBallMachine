@@ -115,7 +115,7 @@ void ControlsClass::ButtonSetup(int _index, int _pin)
 //Buttons
 bool ControlsClass::ButtonCheck(int _index)//Checks if the button is activated
 {
-	bool _retun = false;
+	bool _return = false;
 
 	String _debugString = "--- Button: " + (String)_index + " ---";
 
@@ -123,16 +123,16 @@ bool ControlsClass::ButtonCheck(int _index)//Checks if the button is activated
 
 	//Check if the button is pressed
 	if (_buttonState == HIGH)
-		_retun = true;
+		_return = true;
 
 	delay(10);
 
-	return _retun;
+	return _return;
 }
 
 bool ControlsClass::ButtonCheckPressed(int _index)//Checks if the button was pressed
 {
-	bool _retun = false;
+	bool _return = false;
 
 	String _debugString = "--- Button Pressed: " + (String)_index + " ---";
 
@@ -140,13 +140,13 @@ bool ControlsClass::ButtonCheckPressed(int _index)//Checks if the button was pre
 
 	//Check if the button is pressed
 	if (_buttonState != buttonsPrevState[_index] && _buttonState == HIGH)
-		_retun = true;
+		_return = true;
 
 	buttonsPrevState[_index] = _buttonState;
 
 	delay(10);
 
-	return _retun;
+	return _return;
 }
 
 
