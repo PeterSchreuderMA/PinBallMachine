@@ -20,6 +20,7 @@ char* server; // deployment server
 int requestInterval = 10;
 int requestAmount = 0;
 
+int sendAmount = 0;
 
 String httpResponse;// response from webserver
 
@@ -138,6 +139,34 @@ void InternetClass::HttpRequest(String _doc)
 		Serial.println("");
 	}
 }
+
+void InternetClass::HttpSend(String _data)
+{
+	WiFiClient client; //instance
+
+	if (client.connect(server, 80))
+	{
+		//test
+		//doc = doc + "?test=";
+		//end test
+		sendAmount++;
+		Serial.println("");
+		Serial.println("Send number: " + String(sendAmount));
+
+		//connect to webserver on port 80
+		client.println("POST " + _data + " HTTP/1.1");//construct a HTTP GET request
+		client.println("Host: " + String(server));
+		client.println("Connection: keep-alive");
+		client.println();
+	}
+	else
+	{
+		Serial.println("Webserver does not respond");
+		return;
+	}
+}
+
+
 
 void InternetClass::ParseJson(JsonDocument & _json_doc)
 {

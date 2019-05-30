@@ -15,7 +15,7 @@ void GameplayClass::GameplayLoop()
 	switch (gameStateCurrent)
 	{
 		case GameBoot:
-
+			
 			Serial.println("Booting Up: Pinball Game Arduino...");
 
 			gameStateCurrent = GameBegin;

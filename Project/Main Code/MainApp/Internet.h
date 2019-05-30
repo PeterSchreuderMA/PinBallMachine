@@ -5,8 +5,8 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "arduino.h"
-#include <ESP8266WiFi.h>
-#include <ArduinoJson.h>
+#include "ESP8266WiFi.h"
+#include "ArduinoJson.h"
 #else
 #include "WProgram.h"
 #endif
@@ -23,6 +23,8 @@ public:
 	void WifiConnect();
 
 	void HttpRequest(String _doc);
+	void HttpSend(String _data);
+
 	void ParseJson(JsonDocument & _json_doc);
 	void Payload();
 	void ExtractJson();
