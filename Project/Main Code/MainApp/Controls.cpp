@@ -3,9 +3,9 @@
 // 
 
 #include "Controls.h"
-#include <Servo.h>
+//#include <Servo.h>
 
-Servo flippers[2];
+//Servo flippers[2];
 
 int leds[2];
 
@@ -16,10 +16,12 @@ int buttonsPrevState[2];
 int flipperAngle_A = 60;// Active/
 int flipperAngle_Na = 0;// Not Active
 
-bool debug = false;
+
 
 void ControlsClass::ControlsInit()
 {
+	debug = true;
+
 	//- Define: Buttons
 	ButtonSetup(L_Button, 14);//Left button
 	ButtonSetup(R_Button, 15);//Right button
@@ -40,8 +42,8 @@ void ControlsClass::FlipperSetup(int _index, int  _pin)
 {
 	if (!debug)
 	{
-		flippers[_index].attach(_pin);
-		FlipperRotateTo(_index, flipperAngle_Na);
+		//flippers[_index].attach(_pin);
+		//FlipperRotateTo(_index, flipperAngle_Na);
 	}
 	else
 	{
@@ -93,11 +95,11 @@ void ControlsClass::FlippersDeactivateAll()
 
 void ControlsClass::FlipperRotateTo(int _index, int _angle)
 {
-	if (flippers[_index].read() != _angle)
+	/*if (flippers[_index].read() != _angle)
 	{
 		flippers[_index].write(_angle);
 		//Serial.println("Servo deactivate: " + (String)flippers[_index].read());
-	}
+	}*/
 }
 
 //-----------

@@ -14,6 +14,9 @@ enum Buttons { L_Button, R_Button };
 
 class ControlsClass
 {
+private:
+	boolean debug;
+
  public:
 	 void ControlsInit();
 	 

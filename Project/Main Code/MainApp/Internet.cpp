@@ -3,99 +3,206 @@
 // 
 
 #include "Internet.h"
+#include "PinRemap.h"
+
+int wifiConnecting = PinRemap.D1;
+int wifiOk = PinRemap.D2;
+int Led1 = PinRemap.D3;
+ 
+//static const uint8_t wifiConnecting = D1;//LED indicator wifi status flashing while connecting
+//static const uint8_t wifiOk = D2;//LED indicator wifi status ON if connected
+//static const uint8_t Led1 = D3;//LED indicator wifi status ON if connected
+
+char* ssid; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGEAR_2GEXT | Tel: WhyFy]
+char* password; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
+char* server; // deployment server
+
+int requestInterval = 10;
+int requestAmount = 0;
 
 
-#include <SoftwareSerial.h>
+String httpResponse;// response from webserver
 
-#define DEBUG true
-
-SoftwareSerial esp8266(2, 3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
-							 // This means that you need to connect the TX line from the esp to the Arduino's pin 2
-							 // and the RX line from the esp to the Arduino's pin 3
-
-void InternetClass::InternetSetup()
+void InternetClass::InitInternet(char* _ssid, char* _pw, char* _server)
 {
-	Serial.begin(9600);
-	esp8266.begin(9600); // your esp's baud rate might be different
+	debug = true;
 
-	
+	//Fill the variables
+	ssid = _ssid;
+	password = _pw;
+	server = _server;
 
-	InternetSendData("AT+RST\r\n", 2000, DEBUG); // reset module
-	InternetSendData("AT+CWMODE=2\r\n", 1000, DEBUG); // configure as access point
-	InternetSendData("AT+CIFSR\r\n", 1000, DEBUG); // get ip address
-	InternetSendData("AT+CIPMUX=1\r\n", 1000, DEBUG); // configure for multiple connections
-	InternetSendData("AT+CIPSERVER=1,80\r\n", 1000, DEBUG); // turn on server on port 80
+
+	pinMode(wifiConnecting, OUTPUT);//LED indicator wifi status flashing while connecting
+	pinMode(wifiOk, OUTPUT);//LED indicator wifi status ON if connected
+	pinMode(Led1, OUTPUT);
+
+	digitalWrite(wifiConnecting, LOW);//init off
+	digitalWrite(wifiOk, LOW);//init off
 }
 
-void InternetClass::InternetCheckSend()
+void InternetClass::CheckConnection()
 {
-	if (esp8266.available()) // check if the esp is sending a message 
+	if (WiFi.status() != WL_CONNECTED)
+		WifiConnect();
+}
+
+void InternetClass::WifiConnect()
+{
+	// connect to local network
+	int ledState = 0;//flasher
+
+	digitalWrite(wifiOk, LOW);
+	digitalWrite(wifiConnecting, HIGH);
+
+	Serial.println();
+	Serial.print("Connecting to ");
+	Serial.println(ssid);
+
+	WiFi.begin(ssid, password);
+
+	while (WiFi.status() != WL_CONNECTED)
 	{
+		delay(500);//<========== delay
+		Serial.print(".");
+		if (ledState == 0) ledState = 1;
+		else ledState = 0;
+		digitalWrite(wifiConnecting, ledState);
+	}
 
-		if (esp8266.find("+IPD,"))
+	Serial.println("");
+	Serial.print("WiFi connected, IP address: " + WiFi.localIP().toString());
+
+	if (debug)
+		WiFi.printDiag(Serial); // print Wi-Fi diagnostic information
+
+	digitalWrite(wifiConnecting, LOW);
+	digitalWrite(wifiOk, HIGH);
+}
+
+void InternetClass::HttpRequest(String _doc)
+{
+	// get HTTP response from webserver
+	digitalWrite(wifiOk, LOW);//flash LED
+
+	delay(requestInterval);//time between requests
+
+	digitalWrite(wifiOk, HIGH);//flash LED
+
+	httpResponse = ""; //empty string
+
+	WiFiClient client; //instance
+
+	if (client.connect(server, 80))
+	{
+		//test
+		//doc = doc + "?test=";
+		//end test
+		requestAmount++;
+		Serial.println("");
+		Serial.println("Request number: " + String(requestAmount));
+
+		//connect to webserver on port 80
+		client.println("GET " + _doc + " HTTP/1.1");//construct a HTTP GET request
+		client.println("Host: " + String(server));
+		client.println("Connection: keep-alive");
+		client.println();
+	}
+	else
+	{
+		Serial.println("Webserver does not respond");
+		return;
+	}
+
+	while (client.connected())
+	{
+		while (client.available())
 		{
-			delay(1000);
+			httpResponse += char(client.read());//mogelijk memory problemen
 
-			int connectionId = esp8266.read() - 48; // subtract 48 because the read() function returns 
-												  // the ASCII decimal value and 0 (the first decimal number) starts at 48
-
-			String webpage = "<h1>Hello</h1>&lth2>World!</h2><button>LED1</button>";
-
-			String cipSend = "AT+CIPSEND=";
-			cipSend += connectionId;
-			cipSend += ",";
-			cipSend += webpage.length();
-			cipSend += "\r\n";
-
-			InternetSendData(cipSend, 1000, DEBUG);
-			InternetSendData(webpage, 1000, DEBUG);
-
-			webpage = "<button>LED2</button>";
-
-			cipSend = "AT+CIPSEND=";
-			cipSend += connectionId;
-			cipSend += ",";
-			cipSend += webpage.length();
-			cipSend += "\r\n";
-
-			InternetSendData(cipSend, 1000, DEBUG);
-			InternetSendData(webpage, 1000, DEBUG);
-
-			String closeCommand = "AT+CIPCLOSE=";
-			closeCommand += connectionId; // append connection id
-			closeCommand += "\r\n";
-
-			InternetSendData(closeCommand, 3000, DEBUG);
+			if (httpResponse.length() > 450)
+			{
+				Serial.println("Receive buffer overflow");//prevent buffer overflow
+				httpResponse = ""; //empty string
+				return;
+			}
 		}
 	}
+
+	if (debug)
+	{
+		Serial.println("");
+		Serial.println("-------Full Request-------");
+		Serial.println(httpResponse); //debug
+		Serial.println("--------------------------");
+		Serial.println("");
+	}
 }
 
-String InternetClass::InternetSendData(String _command, const int _timeout, boolean _debug)
+void InternetClass::ParseJson(JsonDocument & _json_doc)
 {
-	String _response = "";
-
-	esp8266.print(_command); // send the read character to the esp8266
-
-	long int _time = millis();
-
-	while ((_time + _timeout) > millis())
+	//parse the commands from the json object
+	if (_json_doc["Led1"] == "on")
 	{
-		while (esp8266.available())
-		{
+		Serial.println("Led1 is on");
+		digitalWrite(Led1, HIGH);
+	}
+	else
+	{
+		Serial.println("Led1 is off");
+		digitalWrite(Led1, LOW);
+	}
+}
 
-			// The esp has data so display its output to the serial window 
-			char _c = esp8266.read(); // read the next character.
-			_response += _c;
+void InternetClass::Payload()
+{
+	// extract wanted data from HTTP response
+	String endOfHeader = "\r\n\r\n";
+	int foundEOH = -1;
+
+	// look for EOH end of header
+	for (int i = 0; i <= httpResponse.length() - endOfHeader.length(); i++)
+	{
+		if (httpResponse.substring(i, endOfHeader.length() + i) == endOfHeader)
+		{
+			foundEOH = i;
 		}
 	}
 
-	if (_debug)
+	httpResponse = httpResponse.substring(foundEOH);// strip the HTTP header
+
+	if (debug)
 	{
-		Serial.print(_response);
+		Serial.println("");
+		Serial.println("-------JSON-------");
+		Serial.println(httpResponse); //debug
+		Serial.println("------------------");
+		Serial.println("");
+	}
+}
+
+void InternetClass::ExtractJson()
+{
+	//extract JSON string from HTTP data
+	int size = httpResponse.length() + 1;
+	char json[size];
+
+	httpResponse.toCharArray(json, size);
+
+	StaticJsonDocument<256> json_object;
+
+	DeserializationError error = deserializeJson(json_object, json);
+
+	if (error)
+	{
+		Serial.print(F("derserializeJson() failed: "));
+		Serial.println(error.c_str());
+		return;
 	}
 
-	return _response;
+	ParseJson(json_object);//parse the commands from the json object
 }
+
 
 
 InternetClass Internet;

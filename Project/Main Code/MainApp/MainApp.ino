@@ -8,11 +8,11 @@
 //werkt met ArduinoJson library version 6.9.1
 
 //pwm library https://nodemcu.readthedocs.io/en/dev/en/modules/pwm/
+#include "PinRemap.h"
 #include "Internet.h"
 #include "Targets.h"
 #include "Gameplay.h"
 #include "Controls.h"
-#include "MachineServos.h"
 //#include "Internet.h"
 //#include <ESP8266WiFi.h>
 //#include <ArduinoJson.h>
