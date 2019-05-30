@@ -21,9 +21,6 @@
     <ClInclude Include="__vm\.MainApp.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MachineServos.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Controls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -33,11 +30,14 @@
     <ClInclude Include="Targets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Internet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinRemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MachineServos.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Controls.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,6 +45,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Targets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Internet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinRemap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
