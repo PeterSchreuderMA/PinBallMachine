@@ -21,7 +21,7 @@
 
 char* mainSsid = "NETGEAR_2GEXT"; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGEAR_2GEXT | Tel: WhyFy]
 char* mainPassword = "DB67437ac17871"; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
-char* mainServer = "peter-schreuder.com"; // deployment server
+char* mainServer = "peter-schreuder.com"; // deployment server     
 
 String docControl = "/projecten/pinball/Website/php/dataReceiver.php"; // path to file
 
@@ -57,12 +57,12 @@ void loop()
 			if (canSend != true)
 			{
 				canSend = true;
-				//Serial.println("Can send again. (Pres S to stop sending)");
+				Serial.println("Sending. (Pres S to stop sending)");
 			}
 			else
 			{
 				canSend = false;
-				//Serial.println("Cannot send anymore. (Pres S to start sending)");
+				Serial.println("Stopped Sending. (Pres S to start sending)");
 			}
 		}
 			

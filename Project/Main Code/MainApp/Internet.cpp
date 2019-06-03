@@ -146,9 +146,7 @@ void InternetClass::HttpSend(String _data)
 
 	if (client.connect(server, 80))
 	{
-		//test
-		//doc = doc + "?test=";
-		//end test
+		
 		sendAmount++;
 		Serial.println("");
 		Serial.println("Send number: " + String(sendAmount));
