@@ -5,6 +5,7 @@
 #include "Internet.h"
 #include "PinRemap.h"
 
+
 int wifiConnecting = PinRemap.D1;
 int wifiOk = PinRemap.D2;
 int Led1 = PinRemap.D3;
@@ -23,6 +24,8 @@ int requestAmount = 0;
 int sendAmount = 0;
 
 String httpResponse;// response from webserver
+
+WiFiClient client; //instance
 
 void InternetClass::InitInternet(char* _ssid, char* _pw, char* _server)
 {
@@ -142,17 +145,19 @@ void InternetClass::HttpRequest(String _doc)
 
 void InternetClass::HttpSend(String _data)
 {
-	WiFiClient client; //instance
 
 	if (client.connect(server, 80))
 	{
-		
+		client.setNoDelay(true);
+
 		sendAmount++;
 		Serial.println("");
 		Serial.println("Send number: " + String(sendAmount));
+		
+		
 
 		//connect to webserver on port 80
-		client.println("POST " + _data + " HTTP/1.1");//construct a HTTP GET request
+		client.println("GET " + _data + " HTTP/1.1");//construct a HTTP GET request
 		client.println("Host: " + String(server));
 		client.println("Connection: keep-alive");
 		client.println();

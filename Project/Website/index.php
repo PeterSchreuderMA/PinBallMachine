@@ -22,10 +22,12 @@
 
 
         <!-- Scripts -->
+        <script src="js/scripts/textFunctions.js" charset="utf-8"></script>
         <script src="js/scripts/web_text.js" charset="utf-8"></script>
 
+
         <?php
-            include("php/dataReceiver.php");
+        include("php/dataReceiver.php");
         ?>
 
     </body>

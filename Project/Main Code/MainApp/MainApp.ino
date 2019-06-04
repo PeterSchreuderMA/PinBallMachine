@@ -8,6 +8,25 @@
 //werkt met ArduinoJson library version 6.9.1
 
 //pwm library https://nodemcu.readthedocs.io/en/dev/en/modules/pwm/
+#include <WiFiUdp.h>
+#include <WiFiServerSecureBearSSL.h>
+#include <WiFiServerSecureAxTLS.h>
+#include <WiFiServerSecure.h>
+#include <WiFiServer.h>
+#include <WiFiClientSecureBearSSL.h>
+#include <WiFiClientSecureAxTLS.h>
+#include <WiFiClientSecure.h>
+#include <WiFiClient.h>
+#include <ESP8266WiFiType.h>
+#include <ESP8266WiFiSTA.h>
+#include <ESP8266WiFiScan.h>
+#include <ESP8266WiFiMulti.h>
+#include <ESP8266WiFiGeneric.h>
+#include <ESP8266WiFiAP.h>
+#include <ESP8266WiFi.h>
+#include <CertStoreBearSSL.h>
+#include <BearSSLHelpers.h>
+
 #include "arduino.h"
 #include "PinRemap.h"
 #include "Internet.h"
@@ -19,8 +38,8 @@
 //#include <ArduinoJson.h>
 
 
-char* mainSsid = "NETGEAR_2GEXT"; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGEAR_2GEXT | Tel: WhyFy]
-char* mainPassword = "DB67437ac17871"; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
+char* mainSsid = "Medialab"; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGEAR_2GEXT | Tel: WhyFy]
+char* mainPassword = "Mediacollege"; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
 char* mainServer = "peter-schreuder.com"; // deployment server     
 
 String docControl = "/projecten/pinball/Website/php/dataReceiver.php"; // path to file
@@ -28,6 +47,9 @@ String docControl = "/projecten/pinball/Website/php/dataReceiver.php"; // path t
 bool canSend = false;
 
 String stopWord = "s";
+
+int testScore = 0;
+int testScoreTimer = 0;
 
 void setup()
 {
@@ -45,33 +67,47 @@ void setup()
 
 void loop()
 {
-	String _str = "";
-
-	//Read user input 
-	_str = Serial.readString();
-
-	if (_str != "")
+	while (true)
 	{
-		if (_str == stopWord)
+		String _str = "";
+
+		//Read user input 
+		_str = Serial.readString();
+
+		if (_str != "")
 		{
-			if (canSend != true)
+			if (_str == stopWord)
 			{
-				canSend = true;
-				Serial.println("Sending. (Pres S to stop sending)");
+				if (canSend != true)
+				{
+					canSend = true;
+					Serial.println("Sending. (Pres S to stop sending)");
+				}
+				else
+				{
+					canSend = false;
+					Serial.println("Stopped Sending. (Pres S to start sending)");
+				}
 			}
-			else
-			{
-				canSend = false;
-				Serial.println("Stopped Sending. (Pres S to start sending)");
-			}
+
 		}
-			
+
+		//Internet.HttpRequest(docControl);
+
+		if (canSend)
+		{
+			/*if (!testScoreTimer == testScoreTimer % 10)
+				return;*/
+
+			testScore++;
+
+			Serial.println("Send: " + String(testScore));
+
+
+			//Internet.HttpSend(docControl + "?score=" + testScore);
+		}
 	}
-
-	//Internet.HttpRequest(docControl);
-
-	if (canSend)
-		Internet.HttpSend(docControl + "?score=100");
+		
 
 	//Gameplay.GameplayLoop();
 }
