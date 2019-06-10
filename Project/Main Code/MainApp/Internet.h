@@ -17,13 +17,13 @@ private:
 	boolean debug;// print debug messages to terminal
 
 public:
-	void InitInternet(char* _ssid, char* _pw, char* _server);
+	void InitInternet(char* _ssid, char* _pw, char* _server, String _docPassword);
 
 	void CheckConnection();
 	void WifiConnect();
 
 	void HttpRequest(String _doc);
-	void HttpSend(String _data);
+	void HttpSend(String _file, String _data);
 
 	void ParseJson(JsonDocument & _json_doc);
 	void Payload();

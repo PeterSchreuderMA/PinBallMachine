@@ -43,6 +43,7 @@ char* mainPassword = "Mediacollege"; // wifi lan wachtwoord [School: Mediacolleg
 char* mainServer = "peter-schreuder.com"; // deployment server     
 
 String docControl = "/projecten/pinball/Website/php/dataReceiver.php"; // path to file
+String docPassword = "";
 
 bool canSend = false;
 
@@ -58,7 +59,7 @@ void setup()
 	//- Initialize: GamePlay
 	//Gameplay.GameplayInit();
 
-	Internet.InitInternet(mainSsid, mainPassword, mainServer);
+	Internet.InitInternet(mainSsid, mainPassword, mainServer, docPassword);
 	Internet.CheckConnection();
 
 
@@ -67,47 +68,45 @@ void setup()
 
 void loop()
 {
-	while (true)
+
+	String _str = "";
+
+	//Read user input 
+	_str = Serial.readString();
+
+	if (_str != "")
 	{
-		String _str = "";
-
-		//Read user input 
-		_str = Serial.readString();
-
-		if (_str != "")
+		if (_str == stopWord)
 		{
-			if (_str == stopWord)
+			if (canSend != true)
 			{
-				if (canSend != true)
-				{
-					canSend = true;
-					Serial.println("Sending. (Pres S to stop sending)");
-				}
-				else
-				{
-					canSend = false;
-					Serial.println("Stopped Sending. (Pres S to start sending)");
-				}
+				canSend = true;
+				Serial.println("Sending. (Pres S to stop sending)");
 			}
-
+			else
+			{
+				canSend = false;
+				Serial.println("Stopped Sending. (Pres S to start sending)");
+			}
 		}
 
-		//Internet.HttpRequest(docControl);
-
-		if (canSend)
-		{
-			/*if (!testScoreTimer == testScoreTimer % 10)
-				return;*/
-
-			testScore++;
-
-			Serial.println("Send: " + String(testScore));
-
-
-			//Internet.HttpSend(docControl + "?score=" + testScore);
-		}
 	}
-		
 
+	//Internet.HttpRequest(docControl);
+
+	if (canSend)
+	{
+		testScoreTimer++;
+
+		if (!testScoreTimer == testScoreTimer % 10)
+			return;
+
+		testScore++;
+
+		//Serial.println("Send: " + String(testScore));
+
+
+		Internet.HttpSend(docControl, "?score=" + String(testScore) + "balls=" + String(testScore % 3));
+	}
 	//Gameplay.GameplayLoop();
 }

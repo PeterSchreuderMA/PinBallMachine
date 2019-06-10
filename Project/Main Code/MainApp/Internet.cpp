@@ -18,6 +18,8 @@ char* ssid; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGE
 char* password; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
 char* server; // deployment server
 
+String docPassword = "";
+
 int requestInterval = 10;
 int requestAmount = 0;
 
@@ -27,7 +29,7 @@ String httpResponse;// response from webserver
 
 WiFiClient client; //instance
 
-void InternetClass::InitInternet(char* _ssid, char* _pw, char* _server)
+void InternetClass::InitInternet(char* _ssid, char* _pw, char* _server, String _docPassword)
 {
 	debug = true;
 
@@ -35,7 +37,7 @@ void InternetClass::InitInternet(char* _ssid, char* _pw, char* _server)
 	ssid = _ssid;
 	password = _pw;
 	server = _server;
-
+	docPassword = _docPassword;
 
 	pinMode(wifiConnecting, OUTPUT);//LED indicator wifi status flashing while connecting
 	pinMode(wifiOk, OUTPUT);//LED indicator wifi status ON if connected
@@ -143,7 +145,7 @@ void InternetClass::HttpRequest(String _doc)
 	}
 }
 
-void InternetClass::HttpSend(String _data)
+void InternetClass::HttpSend(String _file, String _data)
 {
 
 	if (client.connect(server, 80))
@@ -154,10 +156,11 @@ void InternetClass::HttpSend(String _data)
 		Serial.println("");
 		Serial.println("Send number: " + String(sendAmount));
 		
-		
+		// - Make a string with the file path, password to the file and data
+		String _dataString = _file + "?passWord=" + docPassword + _data;
 
 		//connect to webserver on port 80
-		client.println("GET " + _data + " HTTP/1.1");//construct a HTTP GET request
+		client.println("GET " + _dataString + " HTTP/1.1");//construct a HTTP GET request
 		client.println("Host: " + String(server));
 		client.println("Connection: keep-alive");
 		client.println();
