@@ -16,7 +16,7 @@
         <div class="counter">
 
             <div id="score_amount">Score: 00000000</div>
-            <div id="ball_amount">Balls: 0</div>
+            <div id="ball_amount">Ball: 0</div>
 
         </div>
 

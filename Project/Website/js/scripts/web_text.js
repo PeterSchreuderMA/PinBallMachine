@@ -40,10 +40,21 @@ function ScoreUpdateFormFile()
 {
     console.log(readTextFile(savedDataPath));
 
-    score_amount = Math.round(readJson(readTextFile(savedDataPath)).score);
+    let _score = Math.round(readJson(readTextFile(savedDataPath)).score);
+    let _balls = Math.round(readJson(readTextFile(savedDataPath)).balls);
 
-    console.log("Updated Score From File");
+    console.log("Score: " + _score);
+
+    if (_score != "")
+        score_amount = _score;
+
+    if (_balls != "")
+        ball_amount = _balls;
+
+
+    console.log("Updated Score and Ball amout From File");
     UpdateText(score_text, "Score: " + score_amount);
+    UpdateText(ball_text, "Balls: " + ball_amount);
 }
 
 

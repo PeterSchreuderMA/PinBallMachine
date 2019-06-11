@@ -1,36 +1,57 @@
 <?php
 
-$filePath = 'savedData.json';
+$passWord = "PetersPinballMachine";
 
+
+// - File -
+$filePath = 'savedData.json';
 $file = fopen($filePath, "w+") or die("Unable to open file");
 
-$jsonString = fread($file, "r+");
-echo $jsonString;
+// - Json -
+$jsonLine = fread($file, "r+");
+echo $jsonLine;
+
+$jsonString = json_decode($jsonString);
 
 
-/*if ($jsonString == "")
+if ($jsonString == "")
 {
-    $data['score'] = 0;
+    $jsonString['score'] = 0;
+    $jsonString['balls'] = 0;
+}
 
-    $newJsonString = json_encode($data);
-    fwrite($file, $newJsonString);
-}*/
-
-
-if (isset($_GET['score']))
+// - Check the passWord
+if (isset($_GET['passWord']) && $_GET['passWord'] == $passWord)
 {
-    echo 'Get: ' . $_GET['score'];
-    $score = $_GET['score'];
+    // - Get the score
+    if (isset($_GET['score']))
+    {
+        echo 'Get: ' . $_GET['score'];
+        $score = $_GET['score'];
 
-    $data['score'] = $score;
+        $jsonString['score'] = $score;
+    }
 
-    $newJsonString = json_encode($data);
+    // - Get the ball amount
+    else if (isset($_GET['balls']))
+    {
+        echo 'Get: ' . $_GET['balls'];
+        $score = $_GET['balls'];
+
+        $jsonString['balls'] = $score;
+
+    }
+
+    $newJsonString = json_encode($jsonString);
     fwrite($file, $newJsonString);
+    fclose($file);
 }
 
 
 
-fclose($file);
+
+
+
 
 //$jsonString = fread($file, "r+");//file_get_contents($filePath);
 //echo $jsonString;
