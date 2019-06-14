@@ -12,8 +12,20 @@ function update()
 {
     window.requestAnimationFrame(update);
 
-    if (score_amount != readJson(readTextFile(savedDataPath)).score)
+
+    let _score = readJson(readTextFile(savedDataPath)).score;
+    let _balls = readJson(readTextFile(savedDataPath)).balls;
+
+    if (score_amount != _score || ball_amount != _balls)
+    {
+        console.log("-------------------------------------------------");
+
+        console.log("Prev score: " + score_amount + " | New score: " + readJson(readTextFile(savedDataPath)).score);
+        console.log("Prev balls: " + ball_amount + " | New balls: " + readJson(readTextFile(savedDataPath)).balls);
+
         ScoreUpdateFormFile();
+    }
+
 }
 
 update();
@@ -38,16 +50,16 @@ function ScoreUpdate(_amount)
 
 function ScoreUpdateFormFile()
 {
-    console.log(readTextFile(savedDataPath));
+    console.log("File contents: " + readTextFile(savedDataPath));
 
     let _score = "";
     let _balls = "";
 
 
-    //if (readJson(readTextFile(savedDataPath)).score != "")
+    if (readJson(readTextFile(savedDataPath)).score != "")
         _score = Math.round(readJson(readTextFile(savedDataPath)).score);
 
-    //if (readJson(readTextFile(savedDataPath)).balls != "")
+    if (readJson(readTextFile(savedDataPath)).balls != "")
         _balls = Math.round(readJson(readTextFile(savedDataPath)).balls);
 
     console.log("Score: " + _score);
@@ -63,8 +75,8 @@ function ScoreUpdateFormFile()
     else
         score_amount = 0;
 
-
-    console.log("Updated Score and Ball amout From File");
+    console.log("---");
+    console.log("Updated Score and Ball amount From File");
     UpdateText(score_text, "Score: " + score_amount);
     UpdateText(ball_text, "Balls: " + ball_amount);
 }
@@ -88,8 +100,13 @@ function BallsUpdate(_amount)
     UpdateText(ball_text, "Balls: " + ball_amount);
 }
 
+
+//--------
+//- Text -
+//--------
+
 function UpdateText(_textElement, _string)
 {
     _textElement.innerHTML = _string;
-    console.log("Updated Text");
+    console.log("Updated Text: " + _textElement.innerHTML);
 }

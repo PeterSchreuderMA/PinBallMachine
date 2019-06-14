@@ -1,7 +1,28 @@
+.board
+{
+    text-align: center;
+}
+
+.logo h1
+{
+    font-size: 60px;
+
+    margin: 0px;
+}
+
 .counter
 {
+    margin: 7px;
+
     border-style: solid;
 
 
+
     font-size: 60px;
+}
+
+
+.score_text
+{
+    text-align: left;
 }

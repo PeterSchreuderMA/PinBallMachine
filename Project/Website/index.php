@@ -11,14 +11,19 @@
 
     <body>
 
-        <div class="logo"><h1>Pinball Machine</h1></div>
+        <div class="board">
 
-        <div class="counter">
+            <div class="logo"><h1>Pinball Machine</h1></div>
 
-            <div id="score_amount">Score: 00000000</div>
-            <div id="ball_amount">Ball: 0</div>
+            <div class="counters">
+
+                <div id="score_amount" class="counter">Score: 00000000</div>
+                <div id="ball_amount" class="counter">Ball: 0</div>
+
+            </div>
 
         </div>
+
 
 
         <!-- Scripts -->

@@ -39,7 +39,7 @@ function readJson(_jsonString)
     let _return = "";
 
     if (!_jsonString.length <= 0)
-        let _return = JSON.parse(_jsonString);
+        _return = JSON.parse(_jsonString);
 
 
     return _return;

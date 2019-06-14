@@ -1,85 +1,99 @@
 <?php
 
-$passWord = "PetersPinballMachine";
+$passWord = "5525";
 
 
 // - File -
 $filePath = 'savedData.json';
 
-$file = fopen($filePath, "w+") or die("Unable to open file");
-// - Json -
-$jsonLine = fread($file, "r+");
 
-echo $jsonLine;
-$jsonString = json_decode($jsonLine);
+//echoText('filesize: ' . filesize($filePath));
 
 
-if ($jsonString == "")
+// - If the file is empty or null fill the file
+if (filesize($filePath) == 0)
 {
-    $jsonString['score'] = 0;
-    $jsonString['balls'] = 0;
+    echoText('file empty');
+
+    $file = fopen($filePath, "w") or die("Unable to open file");
+
+    // Make up an json useble array
+    $data['score'] = 0;
+    $data['balls'] = 0;
+
+    // Encode and write to the file
+    $newJsonString = json_encode($data);
+    fwrite($file, $newJsonString);
+
+    // Close the file
+    fclose($file);
+
+    header("Refresh:0");
 }
 
-
-fclose($file);
-
-$file = "";
 
 // - Check the passWord
 if (isset($_GET['passWord']))
 {
     if ($_GET['passWord'] == $passWord)
     {
-        echo 'Correct password';
+        echoText('Correct password');
 
-        $file = fopen($filePath, "w+") or die("Unable to open file");
+        $file = fopen($filePath, 'r') or die("Unable to open file");
 
-        $jsonLine = fread($file, "r+");
-        echo $jsonLine;
+        $jsonLine = fread($file, filesize($filePath));
+
+        echoText('file contents: ' . $jsonLine);
+
+
+        fclose($file);
+
+
+        $file = fopen($filePath, "w") or die("Unable to open file");
+
         $jsonString = json_decode($jsonLine);
 
+        //echoText('jsonString: ' . $jsonString);
 
 
         // - Get the score
         if (isset($_GET['score']))
         {
-            echo 'Get: ' . $_GET['score'];
+            echoText('Get: ' . $_GET['score']);
             $score = $_GET['score'];
 
-            $jsonString['score'] = $score;
+            $jsonString->{'score'} = $score;
         }
 
         // - Get the ball amount
-        else if (isset($_GET['balls']))
+        if (isset($_GET['balls']))
         {
-            echo 'Get: ' . $_GET['balls'];
+            echoText('Get: ' . $_GET['balls']);
             $balls = $_GET['balls'];
 
-            $jsonString['balls'] = $balls;
+            $jsonString->{'balls'} = $balls;
 
         }
 
-        echo $jsonString;
+        //echoText('jsonString: ' . $jsonString);
 
         $newJsonString = json_encode($jsonString);
         fwrite($file, $newJsonString);
 
-        echo $newJsonString;
+        fclose($file);
+
+        echoText('newJsonString: ' . $newJsonString);
     }
     else
-        echo 'Wrong password';
+        echoText('Wrong password');
 }
-else
-    echo 'No password';
 
 
 
-
-if ($file != "")
-    fclose($file);
-
-
-
+function echoText($_text)
+{
+    echo $_text . "<br>";
+}
 
 
 
