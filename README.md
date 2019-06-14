@@ -20,6 +20,7 @@ Zet hier de links neer naar jullie documentatie.
 * [Presentatie]()
 * [Logboek](https://docs.google.com/document/d/1QCDX74J8gOg-z7i63uStQxrVylMrT_1izJQTszGkzzM/edit?usp=sharing)
 * [Classdiagrams](https://www.lucidchart.com/invitations/accept/59d8f0a4-0ac7-4f5b-b716-aa253cd95437)
+* [OneDrive Files](https://1drv.ms/f/s!AqnfQvux8HyjkuY_KbhUFyJT46fGug)
 
 ## Benodigdheden
 #### Nodig
