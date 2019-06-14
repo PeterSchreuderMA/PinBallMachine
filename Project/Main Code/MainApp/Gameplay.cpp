@@ -4,6 +4,7 @@
 
 #include "Gameplay.h"
 #include "Controls.h"
+#include "Targets.h"
 
 void GameplayClass::GameplayInit()
 {
@@ -38,6 +39,12 @@ void GameplayClass::GameplayLoop()
 		case GamePlaying:
 
 			InputManager();
+
+			if (Targets.TargetGroupCheckActivated(0))
+			{
+				Serial.println("Score: " + Targets.TargetScore(0));
+			}
+				
 
 			if (ballAmountCurrent == 0)
 			{

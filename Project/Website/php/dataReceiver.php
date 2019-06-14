@@ -5,13 +5,13 @@ $passWord = "PetersPinballMachine";
 
 // - File -
 $filePath = 'savedData.json';
-$file = fopen($filePath, "w+") or die("Unable to open file");
 
+$file = fopen($filePath, "w+") or die("Unable to open file");
 // - Json -
 $jsonLine = fread($file, "r+");
-echo $jsonLine;
 
-$jsonString = json_decode($jsonString);
+echo $jsonLine;
+$jsonString = json_decode($jsonLine);
 
 
 if ($jsonString == "")
@@ -20,33 +20,63 @@ if ($jsonString == "")
     $jsonString['balls'] = 0;
 }
 
+
+fclose($file);
+
+$file = "";
+
 // - Check the passWord
-if (isset($_GET['passWord']) && $_GET['passWord'] == $passWord)
+if (isset($_GET['passWord']))
 {
-    // - Get the score
-    if (isset($_GET['score']))
+    if ($_GET['passWord'] == $passWord)
     {
-        echo 'Get: ' . $_GET['score'];
-        $score = $_GET['score'];
+        echo 'Correct password';
 
-        $jsonString['score'] = $score;
+        $file = fopen($filePath, "w+") or die("Unable to open file");
+
+        $jsonLine = fread($file, "r+");
+        echo $jsonLine;
+        $jsonString = json_decode($jsonLine);
+
+
+
+        // - Get the score
+        if (isset($_GET['score']))
+        {
+            echo 'Get: ' . $_GET['score'];
+            $score = $_GET['score'];
+
+            $jsonString['score'] = $score;
+        }
+
+        // - Get the ball amount
+        else if (isset($_GET['balls']))
+        {
+            echo 'Get: ' . $_GET['balls'];
+            $balls = $_GET['balls'];
+
+            $jsonString['balls'] = $balls;
+
+        }
+
+        echo $jsonString;
+
+        $newJsonString = json_encode($jsonString);
+        fwrite($file, $newJsonString);
+
+        echo $newJsonString;
     }
-
-    // - Get the ball amount
-    else if (isset($_GET['balls']))
-    {
-        echo 'Get: ' . $_GET['balls'];
-        $score = $_GET['balls'];
-
-        $jsonString['balls'] = $score;
-
-    }
-
-    $newJsonString = json_encode($jsonString);
-    fwrite($file, $newJsonString);
-    fclose($file);
+    else
+        echo 'Wrong password';
 }
+else
+    echo 'No password';
 
+
+
+
+if ($file != "")
+    fclose($file);
 
 
 

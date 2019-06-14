@@ -14,7 +14,8 @@
 class InternetClass
 {
 private:
-	boolean debug;// print debug messages to terminal
+	bool debug;// print debug messages to terminal
+	String docPassword;
 
 public:
 	void InitInternet(char* _ssid, char* _pw, char* _server, String _docPassword);

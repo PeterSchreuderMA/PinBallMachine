@@ -15,6 +15,7 @@ class TargetsClass
 	 void TargetsInit();
 	 
 	 void TargetGroupSetup(int _index, int _pin, int _score);
+	 int TargetScore(int _index);
 	 bool TargetGroupCheckActivated(int _index);
 };
 

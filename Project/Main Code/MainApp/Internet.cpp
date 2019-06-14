@@ -18,8 +18,6 @@ char* ssid; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGE
 char* password; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
 char* server; // deployment server
 
-String docPassword = "";
-
 int requestInterval = 10;
 int requestAmount = 0;
 

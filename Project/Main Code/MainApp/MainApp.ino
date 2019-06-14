@@ -8,7 +8,7 @@
 //werkt met ArduinoJson library version 6.9.1
 
 //pwm library https://nodemcu.readthedocs.io/en/dev/en/modules/pwm/
-#include <WiFiUdp.h>
+//#include <WiFiUdp.h>
 #include <WiFiServerSecureBearSSL.h>
 #include <WiFiServerSecureAxTLS.h>
 #include <WiFiServerSecure.h>
@@ -33,17 +33,17 @@
 #include "Targets.h"
 #include "Gameplay.h"
 #include "Controls.h"
-//#include "Internet.h"
-//#include <ESP8266WiFi.h>z
-//#include <ArduinoJson.h>
+#include "Internet.h"
+#include <ESP8266WiFi.h>
+#include <ArduinoJson.h>
 
 
-char* mainSsid = "Medialab"; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGEAR_2GEXT | Tel: WhyFy]
-char* mainPassword = "Mediacollege"; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
+char* mainSsid[3] = { "Medialab", "NETGEAR_2GEXT", "WhyFy" }; // wifi lan Station ID netwerk naam [School: Medialab | Thuis: NETGEAR_2GEXT | Tel: WhyFy]
+char* mainPassword[3] = { "Mediacollege", "DB67437ac17871", "harry345^" }; // wifi lan wachtwoord [School: Mediacollege | Thuis: DB67437ac17871 | Tel: harry345^]
 char* mainServer = "peter-schreuder.com"; // deployment server     
 
 String docControl = "/projecten/pinball/Website/php/dataReceiver.php"; // path to file
-String docPassword = "";
+String docPassword = "5525";
 
 bool canSend = false;
 
@@ -57,9 +57,11 @@ void setup()
 	Serial.begin(115200);// start serial monitor 115200
 	
 	//- Initialize: GamePlay
-	//Gameplay.GameplayInit();
+	Gameplay.GameplayInit();
 
-	Internet.InitInternet(mainSsid, mainPassword, mainServer, docPassword);
+	int _index = 0;
+
+	Internet.InitInternet(mainSsid[_index], mainPassword[_index], mainServer, docPassword);
 	Internet.CheckConnection();
 
 
@@ -91,6 +93,11 @@ void loop()
 		}
 
 	}
+	else
+	{
+		/*if (canSend != true)
+			Serial.println("(Pres S to start sending)");*/
+	}
 
 	//Internet.HttpRequest(docControl);
 
@@ -98,7 +105,7 @@ void loop()
 	{
 		testScoreTimer++;
 
-		if (!testScoreTimer == testScoreTimer % 10)
+		if (!testScoreTimer == testScoreTimer % 5)
 			return;
 
 		testScore++;
@@ -106,7 +113,8 @@ void loop()
 		//Serial.println("Send: " + String(testScore));
 
 
-		Internet.HttpSend(docControl, "?score=" + String(testScore) + "balls=" + String(testScore % 3));
+		Internet.HttpSend(docControl, "&score=" + String(testScore) + "&balls=" + String(testScore % 3));
 	}
-	//Gameplay.GameplayLoop();
+
+	Gameplay.GameplayLoop();
 }
