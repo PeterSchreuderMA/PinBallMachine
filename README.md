@@ -7,13 +7,9 @@
 [Projectmanagment - Trello](https://trello.com/b/2Ilzt33Y/sio-pinball-machine)
 
 ## Ontwerp
-Beschrijf hier kort jullie project
+Ik bouw een fysieke flipper kast als input met een arduino NodeMCU en het verzend de score van de speler naar een website als output 
 
 ## Portfolio
-
-Zet hier de links neer naar jullie documentatie.
-
-
 * [Onderzoek]()
 * [Ontwerp]()
 * [Testrapportage]()
@@ -27,9 +23,7 @@ Zet hier de links neer naar jullie documentatie.
 ###### [Hoeveelheid - Wat]
 * 2 - Knoppen
 
-* 5 - Motortjes
-
-* 1 - Driver Controller
+* 4 - Solenoids
 
 * Veel – Lampjes
 
@@ -37,9 +31,9 @@ Zet hier de links neer naar jullie documentatie.
 
 * Veel - Kabel
 
-* ? - Ledstrips
-
 * 1 - Tablet (Om score te zien)
+
+* Veel - Hout
 
 
 #### Toch maar niet
