@@ -9,6 +9,8 @@
 ## Ontwerp
 Ik bouw een fysieke flipper kast als input met een arduino NodeMCU en het verzend de score van de speler naar een website als output 
 
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
 ## Portfolio
 * [Onderzoek]()
 * [Ontwerp]()
