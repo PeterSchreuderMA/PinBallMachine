@@ -11,12 +11,12 @@ int targetGroupsPrevState[2];
 void TargetsClass::TargetsInit()
 {
 	//- Define: Targetgroups
-	TargetGroupSetup(0, PinRemap.D0, 100);//First text group
+	TargetGroupSetup(0, PinRemap.D0, 100);//First target group
 }
 
 
 
-void TargetsClass::TargetGroupSetup(int _index, int _pin, int _score)
+void TargetsClass::TargetGroupSetup(int _index, int _pin, int _points)
 {
 
 	targetGroups[_index][0] = _pin;
@@ -24,7 +24,7 @@ void TargetsClass::TargetGroupSetup(int _index, int _pin, int _score)
 	targetGroupsPrevState[_index] = HIGH;
 	pinMode(targetGroups[_index][0], INPUT);
 
-	targetGroups[_index][1] = _score;
+	targetGroups[_index][1] = _points;
 }
 
 int TargetsClass::TargetScore(int _index)

@@ -5,6 +5,7 @@
 #include "Gameplay.h"
 #include "Controls.h"
 #include "Targets.h"
+#include "Internet.h"
 
 void GameplayClass::GameplayInit()
 {
@@ -43,6 +44,9 @@ void GameplayClass::GameplayLoop()
 			if (Targets.TargetGroupCheckActivated(0))
 			{
 				Serial.println("Score: " + Targets.TargetScore(0));
+
+				//- Add score
+				Internet.HttpSend(docControl, "&score=" + String(testScore) + "&balls=");
 			}
 				
 

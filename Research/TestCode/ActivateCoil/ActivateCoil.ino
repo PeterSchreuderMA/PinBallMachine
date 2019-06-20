@@ -3,6 +3,8 @@ int buttonPin1 = A1;// Push button input
 int coilPin0 = 7;
 int coilPin1 = 8;
 
+int targetPin0 = 10;
+
 void setup() 
 {
   Serial.begin(9600);
@@ -14,6 +16,9 @@ void setup()
   //- Flippers
   pinMode(coilPin0, OUTPUT);
   pinMode(coilPin1, OUTPUT);
+
+  //- Targets
+  pinMode(targetPin0, INPUT);
 }
 
 void loop() 
@@ -21,6 +26,9 @@ void loop()
   
   ActivateCoil(buttonPin0, coilPin0);
   ActivateCoil(buttonPin1, coilPin1);
+
+  if (CheckTarget(10))
+    Serial.println("Target Hit!");
 }
 
 
@@ -30,7 +38,7 @@ void ActivateCoil(int _button, int _coil)
   
   if (digitalRead(_button) == HIGH)
   {
-    Serial.println("Pressed" + String(_coil));
+    //Serial.println("Pressed" + String(_coil));
     
     //delay(300);
     digitalWrite(_coil, HIGH);
@@ -40,4 +48,16 @@ void ActivateCoil(int _button, int _coil)
   {
     digitalWrite(_coil, LOW);
   }
+}
+
+
+bool CheckTarget(int _index)
+{
+  bool _return = false;
+
+  if (digitalRead(_index) == HIGH)
+    _return = true;
+  
+  return _return;
+  
 }
