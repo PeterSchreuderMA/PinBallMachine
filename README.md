@@ -11,6 +11,7 @@ Ik bouw een fysieke flipper kast als input met een arduino NodeMCU en het verzen
 
 ![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
 
+![alt text](https://github.com/PeterSchreuderMA/PinBallMachine/blob/master/ReadMe/20190613_234421.jpg)
 ## Portfolio
 * [Onderzoek]()
 * [Ontwerp]()
