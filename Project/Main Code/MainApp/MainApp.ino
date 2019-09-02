@@ -71,9 +71,17 @@ void setup()
 void loop()
 {
 
-	String _str = "";
+	Gameplay.GameplayLoop();
 
-	//Read user input 
+	
+
+	
+}
+
+
+/*String _str = "";
+
+	//Read user input
 	_str = Serial.readString();
 
 	if (_str != "")
@@ -95,8 +103,8 @@ void loop()
 	}
 	else
 	{
-		/*if (canSend != true)
-			Serial.println("(Pres S to start sending)");*/
+		if (canSend != true)
+			Serial.println("(Pres S to start sending)");
 	}
 
 	//Internet.HttpRequest(docControl);
@@ -114,7 +122,4 @@ void loop()
 
 
 		Internet.HttpSend(docControl, "&score=" + String(testScore) + "&balls=" + String(testScore % 3));
-	}
-
-	Gameplay.GameplayLoop();
-}
+	}*/

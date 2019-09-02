@@ -3,6 +3,7 @@
 // 
 
 #include "Controls.h"
+#include "PinRemap.h"
 //#include <Servo.h>
 
 //Servo flippers[2];
@@ -23,8 +24,8 @@ void ControlsClass::ControlsInit()
 	debug = true;
 
 	//- Define: Buttons
-	ButtonSetup(L_Button, 14);//Left button
-	ButtonSetup(R_Button, 15);//Right button
+	ButtonSetup(L_Button, PinRemap.D7);//Left button
+	ButtonSetup(R_Button, PinRemap.D8);//Right button
 
 	//- Define: Flippers
 	FlipperSetup(L_Flipper, 4);

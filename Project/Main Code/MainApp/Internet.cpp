@@ -6,9 +6,9 @@
 #include "PinRemap.h"
 
 
-int wifiConnecting = PinRemap.D1;
-int wifiOk = PinRemap.D2;
-int Led1 = PinRemap.D3;
+/*int wifiConnecting = 0;
+int wifiOk = 0;
+int Led1 = 0;*/
  
 //static const uint8_t wifiConnecting = D1;//LED indicator wifi status flashing while connecting
 //static const uint8_t wifiOk = D2;//LED indicator wifi status ON if connected
@@ -37,12 +37,12 @@ void InternetClass::InitInternet(char* _ssid, char* _pw, char* _server, String _
 	server = _server;
 	docPassword = _docPassword;
 
-	pinMode(wifiConnecting, OUTPUT);//LED indicator wifi status flashing while connecting
-	pinMode(wifiOk, OUTPUT);//LED indicator wifi status ON if connected
-	pinMode(Led1, OUTPUT);
+	//pinMode(wifiConnecting, OUTPUT);//LED indicator wifi status flashing while connecting
+	//pinMode(wifiOk, OUTPUT);//LED indicator wifi status ON if connected
+	//pinMode(Led1, OUTPUT);
 
-	digitalWrite(wifiConnecting, LOW);//init off
-	digitalWrite(wifiOk, LOW);//init off
+	//digitalWrite(wifiConnecting, LOW);//init off
+	//digitalWrite(wifiOk, LOW);//init off
 }
 
 void InternetClass::CheckConnection()
@@ -56,8 +56,8 @@ void InternetClass::WifiConnect()
 	// connect to local network
 	int ledState = 0;//flasher
 
-	digitalWrite(wifiOk, LOW);
-	digitalWrite(wifiConnecting, HIGH);
+	//digitalWrite(wifiOk, LOW);
+	//digitalWrite(wifiConnecting, HIGH);
 
 	Serial.println();
 	Serial.print("Connecting to ");
@@ -71,7 +71,7 @@ void InternetClass::WifiConnect()
 		Serial.print(".");
 		if (ledState == 0) ledState = 1;
 		else ledState = 0;
-		digitalWrite(wifiConnecting, ledState);
+		//digitalWrite(wifiConnecting, ledState);
 	}
 
 	Serial.println("");
@@ -80,18 +80,18 @@ void InternetClass::WifiConnect()
 	if (debug)
 		WiFi.printDiag(Serial); // print Wi-Fi diagnostic information
 
-	digitalWrite(wifiConnecting, LOW);
-	digitalWrite(wifiOk, HIGH);
+	//digitalWrite(wifiConnecting, LOW);
+	//digitalWrite(wifiOk, HIGH);
 }
 
 void InternetClass::HttpRequest(String _doc)
 {
 	// get HTTP response from webserver
-	digitalWrite(wifiOk, LOW);//flash LED
+//	digitalWrite(wifiOk, LOW);//flash LED
 
 	delay(requestInterval);//time between requests
 
-	digitalWrite(wifiOk, HIGH);//flash LED
+//	digitalWrite(wifiOk, HIGH);//flash LED
 
 	httpResponse = ""; //empty string
 
@@ -178,12 +178,12 @@ void InternetClass::ParseJson(JsonDocument & _json_doc)
 	if (_json_doc["Led1"] == "on")
 	{
 		Serial.println("Led1 is on");
-		digitalWrite(Led1, HIGH);
+		//digitalWrite(Led1, HIGH);
 	}
 	else
 	{
 		Serial.println("Led1 is off");
-		digitalWrite(Led1, LOW);
+		//digitalWrite(Led1, LOW);
 	}
 }
 

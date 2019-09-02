@@ -20,6 +20,7 @@ class GameplayClass
 
  public:
 	 int ballAmountCurrent;
+	 int scoreAmountCurrent;
 
 
 	 //- Set: Gamestate
